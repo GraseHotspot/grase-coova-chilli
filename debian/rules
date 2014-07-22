@@ -10,6 +10,7 @@
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
+include /usr/share/quilt/quilt.make
 
 ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -g
@@ -27,12 +28,13 @@ config.status: configure
 	--enable-chilliproxy --enable-binstatusfile --enable-chilliscript \
 	--enable-chilliradsec --enable-dnslog --enable-layer3 --enable-eapol \
 	--enable-uamdomainfile --enable-redirdnsreq --enable-modules \
-	--enable-multiroute --enable-extadmvsa --with-openssl --with-poll
+	--enable-multiroute --enable-extadmvsa --with-openssl --with-poll \
+	--enable-gardenaccounting
 
 configure:
 	@test -f configure || ./bootstrap
 
-build: config.status
+build: config.status $(QUILT_STAMPFN)
 	dh_testdir
 	$(MAKE)
 
@@ -63,12 +65,13 @@ binary-arch: build install
 	dh_testroot
 	dh_installdocs
 	dh_installexamples
-	dh_installinit --name chilli
 	dh_installman
 	dh_installinfo
+	dh_install
+	dh_installinit --name chilli
 	dh_link
 	dh_strip
-	dh_compress
+	dh_compress -Xdictionary -Xattributes
 	dh_fixperms
 	dh_makeshlibs
 	dh_installdeb
