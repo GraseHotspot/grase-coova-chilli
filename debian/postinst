@@ -15,4 +15,6 @@ chown -R chilli /etc/chilli/www
     done
 }
 
+update-rc.d chilli defaults
+
 /etc/init.d/chilli start
