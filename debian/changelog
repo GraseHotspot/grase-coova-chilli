@@ -1,3 +1,13 @@
+coova-chilli (1.3.0-grase1) UNRELEASED; urgency=medium
+
+  * First 1.3.0 Grase Build
+  * Debian packaging files
+  * Debian packaging file
+  * Extra files and patches
+  * remove temp file
+
+ -- Tim White <tim@whiteitsolutions.com.au>  Tue, 22 Jul 2014 14:30:06 +1000
+
 coova-chilli (1.3.0) unstable; urgency=low
 
    * See ChangeLog
