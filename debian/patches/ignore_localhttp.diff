@@ -1,0 +1,35 @@
+Index: grase-coova-chilli/src/chilli.c
+===================================================================
+--- grase-coova-chilli.orig/src/chilli.c	2011-10-06 12:15:26.485553000 +1000
++++ grase-coova-chilli/src/chilli.c	2011-10-06 13:11:28.598455120 +1000
+@@ -2342,11 +2342,13 @@
+ #endif
+   
+   /* If the ip src is uamlisten and psrc is uamport we won't call leaky_bucket */
++  /* (And if the packets are destined for the local webserver on port 80) */
+   if ( ! (ipph->saddr  == _options.uamlisten.s_addr && 
+ 	  (ipph->sport == htons(_options.uamport) 
+ #ifdef ENABLE_UAMUIPORT
+ 	   || ipph->sport == htons(_options.uamuiport)
+ #endif
++       || ipph->sport == htons(80)
+ 	   ))) {
+     if (appconn->s_state.authenticated == 1) {
+       if (chilli_acct_tosub(appconn, len))
+@@ -4862,12 +4864,14 @@
+   /* 
+    * If the ip dst is uamlisten and pdst is uamport we won't call leaky_bucket,
+    * and we always send these packets through to the tun/tap interface (index 0) 
++   * (And if the packets are destined for the local webserver on port 80)
+    */
+   if (ipph->daddr  == _options.uamlisten.s_addr && 
+       (ipph->dport == htons(_options.uamport)
+ #ifdef ENABLE_UAMUIPORT
+        || ipph->dport == htons(_options.uamuiport)
+ #endif
++       || ipph->dport == htons(80)
+        ))
+     return tun_encaps(tun, pack, len, 0);
+   
+
+

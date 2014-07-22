@@ -1,0 +1,75 @@
+Index: grase-coova-chilli/www/chilliController.js
+===================================================================
+--- grase-coova-chilli.orig/www/chilliController.js	2010-12-06 13:25:53.001904744 +1000
++++ grase-coova-chilli/www/chilliController.js	2010-12-06 13:30:36.528455354 +1000
+@@ -146,6 +146,11 @@
+ 		    chilliController.session.sessionId :
+ 		    "Not available");
+ 
++    setElementValue("UserNameLink",
++            chilliController.session.userName ?
++            chilliController.session.userName :
++            "Not available");
++
+     setElementValue("startTime",
+ 		    chilliController.session.startTime ?
+ 		    chilliController.session.startTime :
+@@ -174,6 +179,22 @@
+     setElementValue("inputOctets" , chilliController.formatBytes(chilliController.accounting.inputOctets));
+     setElementValue("outputOctets", chilliController.formatBytes(chilliController.accounting.outputOctets));
+     
++    setElementValue("maxRemainOctets",
++        chilliController.formatBytes(
++            Math.max(
++                0,
++                (chilliController.session.maxTotalOctets ?
++                 chilliController.session.maxTotalOctets : 0) - chilliController.accounting.inputOctets - chilliController.accounting.outputOctets
++            )
++        );
++
++    setElementValue("RemainsessionTime",
++        chilliController.formatTime(
++            chilliController.session.sessionTimeout - chilliController.accounting.sessionTime,
++            'unlimited'
++        )
++    );
++
+     chilliClock.resync (chilliController.accounting.sessionTime);
+ }
+ 
+Index: grase-coova-chilli/www/json_html.tmpl
+===================================================================
+--- grase-coova-chilli.orig/www/json_html.tmpl	2010-12-06 13:28:26.879136074 +1000
++++ grase-coova-chilli/www/json_html.tmpl	2010-12-06 13:30:03.171204889 +1000
+@@ -49,7 +49,11 @@
+ <table border="0" id="statusTable" style="padding-top:4px;font-size:70%">
+ <tr id="connectRow">
+ <td><span id="statusMessage">Connected</span></td>
+-<td><a href="#" onClick="return disconnect();">logout</a></td>
++<td><a href="#" id="logoutlink" onClick="return disconnect();">logout</a></td>
++</tr>
++<tr id="UserNameRow">
++<td id="UserNameLabel" class="chilliLabel"><b>Username</b></td>
++<td id="UserNameLink" class="chilliValue">Not available</td>
+ </tr>
+ <tr id="sessionIdRow">
+ <td id="sessionIdLabel" class="chilliLabel"><b>Session ID</b></td>
+@@ -71,10 +75,18 @@
+ <td id="sessionTimeLabel" class="chilliLabel"><b>Session Time</b></td>
+ <td id="sessionTime" class="chilliValue">Not available</td>
+ </tr>
++<tr id="RemainsessionTimeRow">
++<td id="RemainsessionTimeLabel" class="chilliLabel"><b>Remaining Time</b></td>
++<td id="RemainsessionTime" class="chilliValue">Not available</td>
++</tr>
+ <tr id="idleTimeRow">
+ <td id="idleTimeLabel" class="chilliLabel"><b>Idle Time</b></td>
+ <td id="idleTime" class="chilliValue">Not available</td>
+ </tr>
++<tr id="maxRemainOctetsRow">
++<td id="maxRemainOctetsLabel" class="chilliLabel"><b>Remaining Download</b></td>
++<td id="maxRemainOctets" class="chilliValue">Not available</td>
++</tr>
+ <tr id="inputOctetsRow">
+ <td id="inputOctetsLabel" class="chilliLabel"><b>Downloaded</b></td>
+ <td id="inputOctets" class="chilliValue">N/A</td>
