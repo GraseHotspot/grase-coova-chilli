@@ -1,5 +1,15 @@
 #! /bin/sh
 
+### BEGIN INIT INFO
+# Provides:          chilli
+# Required-Start:    $remote_fs $syslog $time $network freeradius dnsmasq
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Chilli Captive Portal
+# Description:       Chilli Captive Portal
+### END INIT INFO
+
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/sbin/chilli
 NAME=chilli

@@ -5,6 +5,7 @@ coova-chilli (1.3.0-grase1) UNRELEASED; urgency=medium
   * Debian packaging file
   * Extra files and patches
   * remove temp file
+  * Fix init script
 
  -- Tim White <tim@whiteitsolutions.com.au>  Tue, 22 Jul 2014 14:30:06 +1000
 
