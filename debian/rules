@@ -75,6 +75,7 @@ binary-arch: build install
 	dh_fixperms
 	dh_makeshlibs
 	dh_installdeb
+	fix_conffiles
 	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
@@ -83,8 +84,7 @@ binary-arch: build install
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install 
 
-override_dh_installdeb:
-	dh_installdeb
+fix_conffiles:
 	@echo "Recreating conffiles without auto-adding /etc files"
 	@for dir in ${CURDIR}/debian/*/DEBIAN; do \
 		PKG=$$(basename $$(dirname $$dir)); \
