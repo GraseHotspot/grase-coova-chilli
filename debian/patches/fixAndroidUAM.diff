@@ -1,0 +1,13 @@
+Index: grase-coova-chilli/conf/functions.in
+===================================================================
+--- grase-coova-chilli.orig/conf/functions.in
++++ grase-coova-chilli/conf/functions.in
+@@ -83,7 +83,7 @@ net		$HS_NETWORK/$HS_NETMASK
+ uamlisten	$HS_UAMLISTEN
+ uamport         $HS_UAMPORT
+ dhcpif		$HS_LANIF
+-uamallowed	"www.coova.org${HS_UAMSERVER:+,$HS_UAMSERVER}$webadmin$uamallow"
++uamallowed	"${HS_UAMSERVER:+$HS_UAMSERVER}$webadmin$uamallow"
+ uamanydns
+ $(cat $configs1)
+ $HS_RAW_CONFIG1
