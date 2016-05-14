@@ -1,3 +1,10 @@
+coova-chilli (1.3.0-grase2) UNRELEASED; urgency=medium
+
+  * Fixing issue with www.coova.org in uamallowed breaking Android captive
+    portal detection
+
+ -- Tim White <tim@grasehotspot.org>  Sat, 14 May 2016 21:51:31 +1000
+
 coova-chilli (1.3.0-grase1) purewhite; urgency=medium
 
   * First 1.3.0 Grase Build
